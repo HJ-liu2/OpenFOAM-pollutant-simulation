@@ -1,0 +1,46 @@
+/*--------------------------------*- C++ -*----------------------------------*\ 
+| =========                 |
+| \\      /  Field         | OpenFOAM: The Open Source CFD Toolbox
+|  \\    /   Operation     | Website: https://openfoam.org
+|   \\  /    And           | Version: 10
+|    \\/     Manipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      nut;
+}
+dimensions      [0 2 -1 0 0 0 0];  // 动力粘度单位：m^2/s
+
+internalField   uniform 0.0;       // 内部初始湍流动力粘度值
+
+boundaryField
+{
+    inlet
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    outlet
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    lake_top
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    fixedwalls
+    {
+        type            nutkWallFunction;
+        value           uniform 0;
+    }
+    lake_wall
+    {
+        type            nutkWallFunction;
+        value           uniform 0;
+    }
+}

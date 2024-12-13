@@ -1,0 +1,31 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \      /  Field         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \    /   O peration     | Version: 10                                     |
+|   \  /    A nd           | Web:      https://openfoam.org                  |
+|    \/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      physicalProperties;
+}
+
+// 物理属性定义
+rho             rho [1 -3 0 0 0 0 0] 1000;  // 流体密度，单位 kg/m^3
+Cp              Cp  [0 0 0 1 0 0 0] 4186;  // 比热容，单位 J/kg·K
+mu              mu  [0 2 -1 0 0 0 0] 1e-03; // 动力粘度，单位 m²/s
+DT              DT  [0 2 -1 0 0 0 0] 1.4e-07;    // 热扩散率，单位 m²/s
+
+// 氮和磷的扩散系数设置
+DT_N            DT_N [0 2 -1 0 0 0 0] 1.0e-05;   // 氮的扩散系数，单位 m²/s
+DT_P            DT_P [0 2 -1 0 0 0 0] 1.0e-05;   // 磷的扩散系数，单位 m²/s
+
+// 源项定义（氮的降解速率）
+source_N        source_N [0 -1 0 0 0 0 0] 1.0e-4;   // 氮的源项，单位 1/s（假设是降解速率）
+
+// 磷的源项定义（如果有的话）
+source_P        source_P [0 -1 0 0 0 0 0] 1.0e-5;   // 磷的源项，单位 1/s

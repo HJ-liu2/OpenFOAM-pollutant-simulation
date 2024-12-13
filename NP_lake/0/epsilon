@@ -1,0 +1,52 @@
+/*--------------------------------*- C++ -*----------------------------------*\ 
+| =========                 |
+| \\      /  Field         | OpenFOAM: The Open Source CFD Toolbox
+|  \\    /   Operation     | Website: https://openfoam.org
+|   \\  /    And           | Version: 10
+|    \\/     Manipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      epsilon;
+}
+dimensions      [0 2 -3 0 0 0 0];  // 湍流耗散率单位：m^2/s^3
+
+internalField   uniform 0.01;       // 内部场初始值，适用于初始模拟稳定
+
+boundaryField
+{
+    inlet
+    {
+        type            fixedValue;
+        value           uniform 2.15; // 使用计算的入口湍流耗散率
+    }
+    outlet
+    {
+        type            zeroGradient; // 零梯度以允许耗散率的自然流出
+    }
+    lake_top
+    { 
+        type            inletOutlet; // 或者 zeroGradient，根据情况选择
+        inletValue      uniform 1e-10;
+        value           uniform 1e-10;
+    }
+    fixedwalls
+    {
+        type            epsilonWallFunction; // 使用适合壁面的 epsilon 函数
+        value           uniform 1e-10;       // 初始值为小值，以适应湍流场发展
+    }
+    lake_wall
+    {
+        type            epsilonWallFunction; // 墙面湍流耗散率函数，用于真实的壁面条件
+        value           uniform 1e-10;       // 同样使用较小的初始值
+    }
+}
+
+// ************************************************************************* //  
+
+
+
+

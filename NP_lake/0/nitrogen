@@ -1,0 +1,44 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |
+| \\      /  Field         | OpenFOAM: The Open Source CFD Toolbox
+|  \\    /   Operation     | Website: https://openfoam.org
+|   \\  /    And           | Version: 10
+|    \\/     Manipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      nitrogen;  // 定义氮浓度场
+}
+dimensions      [0 0 0 1 0 0 0];  // 单位 kg/m³
+
+internalField   uniform 0;       // 初始浓度，单位 kg/m³
+
+boundaryField
+{
+    inlet
+    {
+        type            fixedValue;
+        value           uniform 10;  // 入水口氮浓度，单位 kg/m³
+    }
+    outlet
+    {
+        type            zeroGradient;
+    }
+    lake_top
+    {
+        type            zeroGradient;
+    }
+    fixedwalls
+    {
+        type            zeroGradient;  // 修改为 zeroGradient
+    }
+    lake_wall
+    {
+        type            zeroGradient;  // 修改为 zeroGradient
+    }
+};  // 确保 boundaryField 块以分号结束
+

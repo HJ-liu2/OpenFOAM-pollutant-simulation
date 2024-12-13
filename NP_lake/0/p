@@ -1,0 +1,48 @@
+/*--------------------------------*- C++ -*----------------------------------*\ 
+| =========                 |
+| \\      /  Field         | OpenFOAM: The Open Source CFD Toolbox
+|  \\    /   Operation     | Website: https://openfoam.org
+|   \\  /    And           | Version: 10
+|    \\/     Manipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      p;
+}
+dimensions      [0 2 -2 0 0 0 0];  // 压力单位：Pa
+
+internalField   uniform 0;          // 初始压力值设为基准值（可根据需要进行调整）
+
+boundaryField
+{
+    inlet
+    {
+        type            zeroGradient;  // 保持零梯度，适合流速已定义的入口
+    }
+    outlet
+    {
+        type            fixedValue;
+        value           uniform 0;    // 设定出口为基准压力
+    }
+    lake_top
+    {
+        type            totalPressure;
+        p0              uniform 0;
+        value           uniform 0;
+    }
+    fixedwalls
+    {
+        type            zeroGradient; // 固定壁面无压力梯度
+    }
+    lake_wall
+    {
+        type            zeroGradient;          // 优化为 slip 边界，减少湖泊壁面对压力的附加干扰
+    }
+}
+
+// ************************************************************************* //
+
+

@@ -1,0 +1,54 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |
+| \\      /  Field         | OpenFOAM: The Open Source CFD Toolbox
+|  \\    /   Operation     | Website:  https://openfoam.org
+|   \\  /    And           | Version:  10
+|    \\/     Manipulation  |
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      T;
+}
+
+// 定义物理维度，温度 T 的单位是开尔文 (K)
+dimensions   [0 0 0 1 0 0 0];  // 温度的维度 [0 0 0 1 0 0 0] 对应开尔文 (K)
+
+// 内部场初始化为均匀值 (uniform)，例如初始温度为 0
+internalField   uniform 300;  // 在整个计算域内，温度初始化为 0（可以根据需要调整初始值）
+
+// 边界条件部分
+boundaryField
+{
+    inlet
+    {
+        type            fixedValue;   // 设置入口边界温度为恒定值
+        value           uniform 300;  // 入口温度为 300 K
+    }
+
+    outlet
+    {
+        type            zeroGradient;  // 出口温度的梯度为零
+    }
+
+    lake_top
+    {
+        type            zeroGradient;  // 湖面顶部温度的梯度为零
+    }
+
+    fixedwalls
+    {
+        type            zeroGradient;  // 固定墙的温度梯度为零
+    }
+
+    lake_wall
+    {
+        type            zeroGradient;  // 湖壁的温度梯度为零
+    }
+};
+
+
+

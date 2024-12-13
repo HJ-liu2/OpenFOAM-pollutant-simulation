@@ -1,0 +1,50 @@
+/*--------------------------------*- C++ -*----------------------------------*\ 
+| =========                 |
+| \\      /  Field         | OpenFOAM: The Open Source CFD Toolbox
+|  \\    /   Operation     | Website: https://openfoam.org
+|   \\  /    And           | Version: 10
+|    \\/     Manipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       volVectorField;
+    location    "0";
+    object      U;
+}
+dimensions      [0 1 -1 0 0 0 0];  // 速度的单位：m/s
+
+internalField   uniform (0 0 0);    // 内部场初始值设为静止
+
+boundaryField
+{
+    inlet
+    {
+        type            fixedValue;
+        value           uniform (0 -20 0);  // 使用均匀速度向量，方向和大小根据物理情况定义
+    }
+
+    outlet
+    {
+        type            pressureInletOutletVelocity;
+        inletValue      uniform (0 0 0);  // 允许流出时的开放边界
+        value           uniform (0 0 0);  // 防止反向流动时默认设置
+    }
+    lake_top
+    {
+        type            pressureInletOutletVelocity;
+        value           uniform (0 0 0);  
+    }
+    fixedwalls
+    {
+        type            noSlip;             // 固定壁面采用无滑移条件
+    }
+    lake_wall
+    {
+        type            noSlip;             // 湖泊壁面同样采用无滑移条件
+    }
+}
+
+// ************************************************************************* //
+  
+

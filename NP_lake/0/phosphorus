@@ -1,0 +1,43 @@
+/*--------------------------------*- C++ -*----------------------------------*\ 
+| =========                 |
+| \\      /  Field         | OpenFOAM: The Open Source CFD Toolbox           
+|  \\    /   Operation     | Website: https://openfoam.org                   
+|   \\  /    And           | Version: 10                                    
+|    \\/     Manipulation  |                                               
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      phosphorus;  
+}
+dimensions      [0 0 0 1 0 0 0];  // 表示单位 kg/m³
+
+internalField   uniform 0;       
+
+boundaryField
+{
+    inlet
+    {
+        type            fixedValue;
+        value           uniform 1;  
+    }
+    outlet
+    {
+        type            zeroGradient;
+    }
+    lake_top
+    {
+        type            zeroGradient;
+    }
+    fixedwalls
+    {
+        type            zeroGradient;
+    }
+    lake_wall
+    {
+        type            zeroGradient;
+    }
+};

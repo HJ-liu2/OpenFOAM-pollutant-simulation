@@ -1,0 +1,46 @@
+/*--------------------------------*- C++ -*----------------------------------*\ 
+| =========                 |
+| \\      /  Field         | OpenFOAM: The Open Source CFD Toolbox
+|  \\    /   Operation     | Website: https://openfoam.org
+|   \\  /    And           | Version: 10
+|    \\/     Manipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      k;
+}
+dimensions      [0 2 -2 0 0 0 0];  // 湍流动能单位：m^2/s^2
+
+internalField   uniform 0.01;       // 内部场初始值
+
+boundaryField
+{
+    inlet
+    {
+        type            fixedValue;
+        value           uniform 0.844; // 根据入口条件定义湍流动能值
+    }
+    outlet
+    {
+        type            zeroGradient;
+    }
+    lake_top
+    {
+        type            inletOutlet; // 或者 zeroGradient，根据情况选择
+        inletValue      uniform 1e-10;
+        value           uniform 1e-10;
+    }
+    fixedwalls
+    {
+        type            kqRWallFunction; // 使用墙面湍流函数
+        value           uniform 0;       // 初始化值设为0
+    }
+    lake_wall
+    {
+        type            kqRWallFunction; // 使用墙面湍流函数
+        value           uniform 0;       // 初始化值设为0
+    }
+}
